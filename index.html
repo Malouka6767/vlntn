@@ -8,7 +8,7 @@
     body {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start; /* move content higher */
         align-items: center;
         height: 100vh;
         background-color: #ffe6e6;
@@ -16,6 +16,7 @@
         text-align: center;
         overflow: hidden;
         position: relative;
+        padding-top: 50px; /* extra space from top */
     }
 
     h1 {
@@ -56,20 +57,20 @@
     const noBtn = document.getElementById('noBtn');
     let yesSize = 1.2; // initial scale
 
-    // Position the buttons initially
+    // Initial button positions
     yesBtn.style.left = "40%";
-    yesBtn.style.top = "50%";
+    yesBtn.style.top = "60%";
     noBtn.style.left = "60%";
-    noBtn.style.top = "50%";
+    noBtn.style.top = "60%";
 
-    // Get viewport size for random movement
+    // Get random position inside viewport
     function getRandomPosition() {
         const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
         const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
         return { x, y };
     }
 
-    // Move No button when hovered
+    // No button runs away when hovered
     noBtn.addEventListener('mouseenter', () => {
         const pos = getRandomPosition();
         noBtn.style.left = pos.x + 'px';
@@ -80,11 +81,21 @@
         yesBtn.style.transform = `scale(${yesSize})`;
     });
 
+    // Yes button clicked
     yesBtn.addEventListener('click', () => {
-        alert("Yayy! I'm so happy! 💖");
+        alert("Ayyyyyyyyy malla jaww!");
+
+        // Send Discord webhook notification
+        fetch("https://discord.com/api/webhooks/1469700623976104069/-X4H4b_-5nuJWSO05BJtHQVhwEbuiUds9rBLceaZlmKygSaQ4Ld0VfIIRQDc2eTpL4-_", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ content: "Someone clicked YES on your Valentine site! 💌" })
+        }).catch(err => console.error("Webhook error:", err));
     });
 
-    // Optional: keep buttons inside viewport on resize
+    // Keep buttons inside viewport on resize
     window.addEventListener('resize', () => {
         yesBtn.style.left = Math.min(parseFloat(yesBtn.style.left), window.innerWidth - yesBtn.offsetWidth) + 'px';
         yesBtn.style.top = Math.min(parseFloat(yesBtn.style.top), window.innerHeight - yesBtn.offsetHeight) + 'px';
