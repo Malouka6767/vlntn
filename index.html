@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Proposal</title>
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #ffe6e6;
+        font-family: 'Arial', sans-serif;
+        text-align: center;
+        overflow: hidden;
+        position: relative;
+    }
+
+    h1 {
+        font-size: 3rem;
+        color: #ff1a75;
+        margin-bottom: 40px;
+    }
+
+    button {
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        margin: 10px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        position: absolute;
+        transition: all 0.3s ease;
+    }
+
+    #yesBtn {
+        background-color: #ff6699;
+        color: white;
+    }
+
+    #noBtn {
+        background-color: #cccccc;
+        color: black;
+    }
+</style>
+</head>
+<body>
+<h1>Will you be my Valentine?</h1>
+<button id="yesBtn">Yes</button>
+<button id="noBtn">No</button>
+
+<script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    let yesSize = 1.2; // initial scale
+
+    // Position the buttons initially
+    yesBtn.style.left = "40%";
+    yesBtn.style.top = "50%";
+    noBtn.style.left = "60%";
+    noBtn.style.top = "50%";
+
+    // Get viewport size for random movement
+    function getRandomPosition() {
+        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+        const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+        return { x, y };
+    }
+
+    // Move No button when hovered
+    noBtn.addEventListener('mouseenter', () => {
+        const pos = getRandomPosition();
+        noBtn.style.left = pos.x + 'px';
+        noBtn.style.top = pos.y + 'px';
+
+        // Increase Yes button size
+        yesSize += 0.2;
+        yesBtn.style.transform = `scale(${yesSize})`;
+    });
+
+    yesBtn.addEventListener('click', () => {
+        alert("Yayy! I'm so happy! 💖");
+    });
+
+    // Optional: keep buttons inside viewport on resize
+    window.addEventListener('resize', () => {
+        yesBtn.style.left = Math.min(parseFloat(yesBtn.style.left), window.innerWidth - yesBtn.offsetWidth) + 'px';
+        yesBtn.style.top = Math.min(parseFloat(yesBtn.style.top), window.innerHeight - yesBtn.offsetHeight) + 'px';
+        noBtn.style.left = Math.min(parseFloat(noBtn.style.left), window.innerWidth - noBtn.offsetWidth) + 'px';
+        noBtn.style.top = Math.min(parseFloat(noBtn.style.top), window.innerHeight - noBtn.offsetHeight) + 'px';
+    });
+</script>
+</body>
+</html>
